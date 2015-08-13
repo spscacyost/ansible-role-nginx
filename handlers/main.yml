@@ -1,3 +1,14 @@
 ---
 - name: restart nginx
+  command: /bin/true
+  notify:
+   - "restart nginx supervisor"
+   - "restart nginx service"
+
+- name: restart nginx service
   service: name=nginx state=restarted
+  when: nginx_manager == 'service'
+
+- name: restart nginx supervisor
+  supervisorctl: name=nginx state=restart
+  when: nginx_manager == 'supervisor'
