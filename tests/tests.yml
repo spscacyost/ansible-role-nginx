@@ -1,23 +1,43 @@
-- hosts: nginx
-  tasks:
+- hosts: test
+  vars:
+    nginx_sites:
+    - name: testsite
+      template: site.j2
+      files:
+      - name: up.json
+        content: '{ "status": "happy" }'    
+  roles:
+    - role: "{{ lookup('pipe','pwd')| dirname }}"
+
+  post_tasks:
+    handlers:
+    - apt: name=curl
+
     - command: "curl -v -H 'Host: testsite' 'http://127.0.0.1:81/up'"
       register: curlresponse
+      changed_when: false
+
     - assert: 
         that:
           - curlresponse.rc == 0
           - '"200" in curlresponse.stderr'
           - '"happy" in curlresponse.stdout'
+      changed_when: false
 
     - command: "curl -v -H 'Host: testsite' 'http://127.0.0.1:81/404'"
       register: curlresponse
+      changed_when: false
     - assert: 
         that:
           - curlresponse.rc == 0
           - '"404" in curlresponse.stderr'
+      changed_when: false
 
     - command: "curl -v -H 'Host: testsite' 'http://127.0.0.1:81/other'"
       register: curlresponse
+      changed_when: false
     - assert: 
         that:
           - curlresponse.rc == 0
           - '"204" in curlresponse.stderr'
+      changed_when: false
