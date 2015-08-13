@@ -4,8 +4,6 @@
   vars:
     install_ppa: True
   pre_tasks:
-  handlers: 
-    - include: super_handler.yml
   roles:
     - nginx
 - include: tests.yml

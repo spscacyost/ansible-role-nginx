@@ -10,5 +10,5 @@
   when: nginx_manager == 'service'
 
 - name: restart nginx supervisor
-  supervisorctl: name=nginx state=restart
+  supervisorctl: name=nginx state=restarted
   when: nginx_manager == 'supervisor'
