@@ -1,5 +1,6 @@
 - hosts: test
   vars:
+    install_ppa: true
     nginx_sites:
     - name: testsite
       template: site.j2
@@ -7,10 +8,9 @@
       - name: up.json
         content: '{ "status": "happy" }'    
   roles:
-    - role: "{{ lookup('pipe','pwd')| dirname }}"
+    - role: ansible-role-nginx
 
   post_tasks:
-    handlers:
     - apt: name=curl
 
     - command: "curl -v -H 'Host: testsite' 'http://127.0.0.1:81/up'"

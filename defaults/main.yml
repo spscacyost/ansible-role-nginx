@@ -1,9 +1,9 @@
 ---
-nginx_manager: service
-#nginx_manager: supervisor
-#super_managed: true
 # var to short circuit the entire role
 nginx_enabled: true
+
+nginx_manager: service
+#nginx_manager: supervisor
 
 # Nginx Settings
 

@@ -1,9 +1,0 @@
----
-- hosts: test
-  sudo: true
-  vars:
-    install_ppa: True
-  pre_tasks:
-  roles:
-    - nginx
-- include: tests.yml
